@@ -12,10 +12,14 @@ package com.mycompany.prog5121_poe_quickchat;
 
 public class Login {
 
-    public boolean checkUserName(String username) {
-        return false;
+        public boolean checkUserName(String username) {
+        // Username must contain an underscore and be no more than 5 characters long
+        if (username != null && username.contains("_") && username.length() <= 5) {
+            return true;
+        } else {
+            return false;
+        }
     }
-
     public boolean checkPasswordComplexity(String password) {
         return false;
     }
