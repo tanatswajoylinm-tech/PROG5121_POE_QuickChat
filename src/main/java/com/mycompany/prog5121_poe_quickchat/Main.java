@@ -2,7 +2,7 @@ package com.mycompany.prog5121_poe_quickchat;
 
 import java.util.Scanner;
 import java.util.Random;
-
+// Oct 17
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
