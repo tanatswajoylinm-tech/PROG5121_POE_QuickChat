@@ -11,7 +11,7 @@ public class Message {
     private String recipient;
     private String messageText;
     private String messageHash;
-    
+    // Oct 18 
     // Arrays for Part 3
     public static ArrayList<String> sentMessages = new ArrayList<>();
     public static ArrayList<String> storedMessages = new ArrayList<>();
