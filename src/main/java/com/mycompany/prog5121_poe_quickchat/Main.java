@@ -2,18 +2,20 @@ package com.mycompany.prog5121_poe_quickchat;
 
 import java.util.Scanner;
 import java.util.Random;
-// Oct 17
+import java.util.ArrayList;
+
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
 
         System.out.println("Welcome to QuickChat.");
-        
+          Message.loadStoredMessagesFromJSON("messages.json");
         while (running) {
             System.out.println("\n1) Send Messages");
             System.out.println("2) Show recently sent messages");
             System.out.println("3) Quit");
+            System.out.println("4) Stored Messages");
             System.out.print("Choose an option: ");
             
             String choice = scanner.nextLine();
@@ -73,8 +75,61 @@ public class Main {
                     running = false;
                     break;
                     
+                case "4":
+                    boolean backToMenu = false;
+                    while (!backToMenu) {
+                        System.out.println("\n--- Stored Messages Menu ---");
+                        System.out.println("a) Display sender and recipient of all stored messages");
+                        System.out.println("b) Display the longest stored message");
+                        System.out.println("c) Search for a message ID");
+                        System.out.println("d) Search for messages by recipient");
+                        System.out.println("e) Delete a message using the message hash");
+                        System.out.println("f) Display full report");
+                        System.out.println("g) Back to main menu");
+                        System.out.print("Choose: ");
+
+                        String storedChoice = scanner.nextLine().toLowerCase();
+
+                        switch (storedChoice) {
+                            case "a":
+                                System.out.println(Message.displaySenderAndRecipient());
+                                break;
+                            case "b":
+                                System.out.println(Message.getLongestMessage());
+                                break;
+                            case "c":
+                                System.out.print("Enter Message ID: ");
+                                System.out.println(Message.searchByMessageID(scanner.nextLine()));
+                                break;
+                           case "d":
+                                System.out.print("Enter recipient: ");
+                                ArrayList<String> found = Message.searchByRecipient(scanner.nextLine());
+                                if (found.isEmpty()) {
+                                System.out.println("No messages found for this recipient.");
+                                } else {
+                                    for (String m : found) {
+                                        System.out.println(m);
+                                    }
+                                }
+                                break;
+                            case "e":
+                                System.out.print("Enter Message Hash: ");
+                                System.out.println(Message.deleteByHash(scanner.nextLine()));
+                                break;
+                            case "f":
+                                System.out.println(Message.displayFullReport());
+                                break;
+                            case "g":
+                                backToMenu = true;
+                                break;
+                            default:
+                                System.out.println("Invalid option.");
+        }
+    }
+    break;
+                    
                 default:
-                    System.out.println("Invalid option. Please choose 1, 2, or 3.");
+                    System.out.println("Invalid option. Please choose 1, 2, or 3 or 4");
             }
         }
         scanner.close();
