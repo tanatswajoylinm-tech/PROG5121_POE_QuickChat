@@ -15,6 +15,7 @@ public class Message {
     private String messageHash;
 
     // ===== Part 3 arrays (static so all Message objects share them) =====
+    // Part 3 lists. They are static so every Message object uses the same lists.
     public static ArrayList<String> sentMessages = new ArrayList<>();
     public static ArrayList<String> disregardedMessages = new ArrayList<>();
     public static ArrayList<String> storedMessages = new ArrayList<>();
@@ -22,6 +23,7 @@ public class Message {
     public static ArrayList<String> messageIDs = new ArrayList<>();
 
     // extra lists so I can search by recipient: same index = same message
+    // Extra lists so I can search by recipient. The same index in every list belongs to the same message.
     public static ArrayList<String> messageRecipients = new ArrayList<>();
     public static ArrayList<String> messageTexts = new ArrayList<>();
     public static ArrayList<String> messageFlags = new ArrayList<>(); // Sent, Stored, Disregard
@@ -66,6 +68,7 @@ public class Message {
     }
 
     // CHANGED: every choice now saves the message into the Part 3 arrays
+    // Saves the message depending on the choice: 1 = sent, 2 = disregarded, 3 = stored.
     public String SentMessage(String option) {
         switch (option) {
             case "1":
@@ -113,6 +116,7 @@ public class Message {
     // ===================== PART 3 =====================
 
     // Adds one message to all the arrays
+    // Adds one message to all the lists. The flag says if it was Sent, Stored or Disregard.
     public static void addRecord(String id, String hash, String recipient, String text, String flag) {
         messageIDs.add(id);
         messageHashes.add(hash);
@@ -130,6 +134,7 @@ public class Message {
     }
 
     // Empties every array (used by the unit tests)
+    // Empties all the lists so each unit test starts with a clean slate.
     public static void clearAll() {
         sentMessages.clear();
         disregardedMessages.clear();
@@ -142,6 +147,7 @@ public class Message {
     }
 
     // Reads messages.json (one JSON object per line) into the arrays
+    // Reads messages.json line by line and puts each stored message back into the lists.
     public static void loadStoredMessagesFromJSON(String fileName) {
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
@@ -159,6 +165,7 @@ public class Message {
     }
 
     // a. sender and recipient of all stored messages
+    // Loops through the messages and shows the recipient of each one flagged Stored.
     public static String displaySenderAndRecipient() {
         String output = "";
         for (int i = 0; i < messageTexts.size(); i++) {
@@ -173,6 +180,7 @@ public class Message {
     }
 
     // b. longest stored message
+    // Keeps the longest stored message found so far and replaces it when a longer one appears.
     public static String getLongestMessage() {
         String longest = "";
         for (int i = 0; i < messageTexts.size(); i++) {
@@ -187,6 +195,7 @@ public class Message {
     }
 
     // c. search by message ID
+    // Loops until the message ID matches, then returns that recipient and message.
     public static String searchByMessageID(String id) {
         for (int i = 0; i < messageIDs.size(); i++) {
             if (messageIDs.get(i).equals(id)) {
@@ -197,6 +206,7 @@ public class Message {
     }
 
     // d. all sent or stored messages for one recipient
+    // Collects every sent or stored message for this recipient. Disregarded ones are skipped.
     public static ArrayList<String> searchByRecipient(String recipient) {
         ArrayList<String> found = new ArrayList<>();
         for (int i = 0; i < messageRecipients.size(); i++) {
@@ -209,6 +219,7 @@ public class Message {
     }
 
     // e. delete using the message hash
+    // Finds the message with this hash and removes it from every list so the lists stay lined up.
     public static String deleteByHash(String hash) {
         for (int i = 0; i < messageHashes.size(); i++) {
             if (messageHashes.get(i).equalsIgnoreCase(hash)) {
@@ -236,6 +247,7 @@ public class Message {
     }
 
     // f. full report (sent and stored messages)
+    // Builds a report with the ID, hash, recipient and message of every sent or stored message.
     public static String displayFullReport() {
         String report = "";
         for (int i = 0; i < messageTexts.size(); i++) {
