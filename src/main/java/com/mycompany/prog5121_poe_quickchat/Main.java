@@ -10,6 +10,7 @@ public class Main {
         boolean running = true;
 
         System.out.println("Welcome to QuickChat.");
+        // Load any messages saved earlier in the JSON file when the program starts.
           Message.loadStoredMessagesFromJSON("messages.json");
         while (running) {
             System.out.println("\n1) Send Messages");
@@ -74,9 +75,10 @@ public class Main {
                     System.out.println("Exiting QuickChat. Goodbye!");
                     running = false;
                     break;
-                    
+                // Option 4: Stored Messages sub-menu.    
                 case "4":
                     boolean backToMenu = false;
+                    // The sub-menu keeps showing until the user chooses g (back to main menu).
                     while (!backToMenu) {
                         System.out.println("\n--- Stored Messages Menu ---");
                         System.out.println("a) Display sender and recipient of all stored messages");
@@ -101,6 +103,7 @@ public class Main {
                                 System.out.print("Enter Message ID: ");
                                 System.out.println(Message.searchByMessageID(scanner.nextLine()));
                                 break;
+                           // Show every message found for the recipient, or say that none were found.     
                            case "d":
                                 System.out.print("Enter recipient: ");
                                 ArrayList<String> found = Message.searchByRecipient(scanner.nextLine());
@@ -112,6 +115,7 @@ public class Main {
                                     }
                                 }
                                 break;
+                            // Delete a message by typing its message hash.    
                             case "e":
                                 System.out.print("Enter Message Hash: ");
                                 System.out.println(Message.deleteByHash(scanner.nextLine()));
