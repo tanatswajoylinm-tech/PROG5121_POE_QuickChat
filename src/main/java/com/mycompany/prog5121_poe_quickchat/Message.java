@@ -1,3 +1,12 @@
+/*
+ * References
+ * Leary, S. (2023) JSON-java (Version 20231013) [Software].
+ * Available at: https://github.com/stleary/JSON-java [Accessed 18 November 2026].
+ *
+ * Stack Overflow. 2010. Validate South Africa Cell Phone Number [Online].
+ * Available at: https://stackoverflow.com/questions/4058001/validate-south-africa-cell-phone-number
+ * [Accessed 18 September 2026].
+ */
 package com.mycompany.prog5121_poe_quickchat;
 
 import java.io.BufferedReader;
@@ -5,6 +14,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+// JSON library used to save and read messages (Leary, 2023)
 import org.json.JSONObject;
 
 public class Message {
@@ -43,6 +53,7 @@ public class Message {
     }
 
     public String checkRecipientCell() {
+        // Regular expression for a South African number with +27 (Stack Overflow, 2010)
         String regex = "^\\+27[0-9]{9}$";
         if (this.recipient != null && this.recipient.matches(regex)) {
             return "Cell phone number successfully captured.";
